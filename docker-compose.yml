@@ -1,0 +1,15 @@
+volumes:
+  share: {}
+
+services:
+  srv:
+    image: ghcr.io/servercontainers/samba:smbd-only-latest
+    restart: always
+    network_mode: host
+    environment:
+      ACCOUNT_user: "${PASSWORD}"
+      SAMBA_VOLUME_CONFIG_camera_share: "[camera]; path=/share; valid users = user; read only = no; browsable = yes; writable = yes"
+      UID_user: 1000
+      GROUP_smbgroup: 1000
+    volumes:
+      - share:/share
